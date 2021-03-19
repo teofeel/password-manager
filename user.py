@@ -15,6 +15,9 @@ class User:
     def setPassword(self, password):
         self.__password = password
 
+    def getPassword(self):
+        return self.__password
+
     def getName(self):
         return self.__name 
 
