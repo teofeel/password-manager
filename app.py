@@ -6,8 +6,7 @@ from account import Account
 from user import User
 
 
-#input() is gonna be textBox.Text from flask
-#need to add gui
+
 #connect users.json with mongoDB
 
 users = []
@@ -46,6 +45,7 @@ def login(users):
     for i in users:
         if i.getName() == username and i.getPassword() == password:
             current_user = i
+            print(current_user.getName())
             logged_in_menu(current_user)
         else:
             continue

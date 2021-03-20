@@ -11,7 +11,7 @@ from user import User
 app = Flask(__name__)
 
 users = []
-current_user = None #user that is currently logged in
+current_user = User("","",[]) #user that is currently logged in
 
 def load_database(users):
     users_file = open("users.json")
@@ -37,6 +37,7 @@ def update_database(user):
         write_json(data)
 
 def login(username, password):
+    global current_user
     for i in users:
         if i.getName() == username and i.getPassword() == password:
             current_user = i
@@ -64,12 +65,7 @@ def check_registry(username, password, conf_pass):
         }
         update_database(new_user)
         return 3
-
-def get_accounts(username):
-    for i in users:
-        if i.getName() == username:
-            return i.getAccounts()
-
+    
 @app.route('/')
 def welcome_page():
     return render_template("welcome_page.html")
@@ -85,15 +81,15 @@ def login_user():
         password = request.form.get("password")
 
         if login(username, password):
-            return main_page(username)
+            return main_page()
         
     return render_template("login_page.html", content = "Username or password not matching. Try again")
 
 
-
 @app.route('/')
-def main_page(username):
-    return render_template("main_page.html", content = "Welcome "+username, accounts = get_accounts(username))
+def main_page():
+    global current_user
+    return render_template("main_page.html", content = "Welcome "+current_user.getName(), accounts = current_user.getAccounts())
 
 
 @app.route('/register/')
@@ -102,13 +98,15 @@ def register_page():
 
 @app.route('/register/', methods=["GET","POST"])
 def register_user():
+    global current_user
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
         conf_pass = request.form.get("confirm_password")
 
         if check_registry(username, password, conf_pass) == 3:
-            return main_page(username)
+            current_user = User(username,password,[])
+            return main_page()
 
         elif check_registry(username, password, conf_pass) == 2:
             return render_template("register_page.html", content="Username already exists")
@@ -126,13 +124,16 @@ def write_account_json(new_account, username):
                 temp = i['saved_accounts']
                 temp.append(new_account)
                 write_json(data)
+        json_file.close()
+    
 
 @app.route("/new_account/")
 def new_account_page():
     return render_template("new_account_page.html")
 
-@app.route("/new_account/<string:username>", methods = ["GET","POST"])
-def add_new_account(username):
+@app.route("/new_account/", methods = ["GET","POST"])
+def add_new_account():
+    global current_user
     if request.method == "POST":
         account = request.form.get("name")
         username = request.form.get("username")
@@ -146,10 +147,7 @@ def add_new_account(username):
         }
         write_account_json(new_acc, current_user.getName())
 
-    return main_page(current_user.getName())
-
-
-
+    return main_page()
 
 load_database(users)
-app.run()
+app.run(debug="on")
