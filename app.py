@@ -6,7 +6,6 @@ from account import Account
 from user import User
 
 
-#dont know how to add new user to json file
 #input() is gonna be textBox.Text from flask
 #need to add gui
 #connect users.json with mongoDB
@@ -59,7 +58,7 @@ def check_existing_username(username):
             if username == i['username']:
                 return False
         return True
-        
+
 def register_new_user(users):
     print("Register\n")
     print("Username: ")

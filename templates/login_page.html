@@ -1,22 +1,28 @@
+<!DOCTYPE html>
 <html>
-    
     <head>
         <title>Password manager</title>
-
+        <link href = "login_page.css">
     </head>
 
     <body>
-        <h1>Password manager</h1>
+        <h1>Login</h1>
         <div id="login_form">
             <h2>Login</h2>
-            <h4>Username</h4>
-            <h4>Password</h4>
+
+            <form action = "{{url_for("login_user")}}" method="POST">
+                <h4>Username</h4>
+                <input type = "text" name="username">
+                <h4>Password</h4>
+                <input type = "password" name = "password">
+                <br>
+                <button type="submit">Login</button>
+                <p>{{content}}</p>
+            </form>
         </div>
-
-        <button>Login</button>
-
-        <div id="register_new_account">
-            <button>Create new account</button>
+        <br>
+        <div id="register_new_user">
+            <a href="/register">Register new user</a>
         </div>
     </body>
 
