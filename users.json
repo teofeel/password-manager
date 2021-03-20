@@ -1,16 +1,1 @@
-{
-    "users": 
-    [
-        {
-            "username": "Niko",
-            "password": "Nekasifra",
-            "saved_accounts":
-            [
-                {"name":"fb", "username":"neka@gmail.com", "password": "jaooooo"},
-                {"name":"tw", "username":"neka@gmail.com", "password": "mjaoooo"}
-            ]
-        }
-    ]
-}
-
-                 
+{"users": [{"username": "Niko", "password": "Nekasifra", "saved_accounts": [{"name": "fb", "username": "neka@gmail.com", "password": "jaooooo"}, {"name": "tw", "username": "neka@gmail.com", "password": "mjaoooo"}]}, {"username": "teo", "password": "idi", "saved_accounts": [{"name": "fb", "username": "teo", "password": "idi"}]}]}

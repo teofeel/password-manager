@@ -26,8 +26,8 @@ def load_database(users):
         account = [] 
 
 def write_json(data, filename='users.json'):
-    with open(filename,'w+') as f: 
-        json.dump(data, f, ensure_ascii=False) 
+    with open(filename,'w') as f: 
+        json.dump(data,f)
 
 def update_database(user):
     with open('users.json') as json_file: 
@@ -52,11 +52,25 @@ def login(users):
 
     return False
   
-
+def check_existing_username(username):
+    with open('users.json') as f:
+        data = json.load(f)
+        for i in data['users']:
+            if username == i['username']:
+                return False
+        return True
+        
 def register_new_user(users):
     print("Register\n")
     print("Username: ")
     username = input()
+
+    while not check_existing_username(username):
+        print("Username already exists. Try new: ")
+        username = input()
+        if check_existing_username(username):
+            valid_username = username
+            break
 
     print("Password: ")
     password = input()
@@ -66,13 +80,13 @@ def register_new_user(users):
 
     if password == ag_password:
         new_user = {
-            "username": username,
+            "username": valid_username,
             "password": ag_password,
-            "saved_accounts": None
+            "saved_accounts": []
         }
         users.append(User(new_user["username"], new_user["password"], new_user["saved_accounts"]))
-    login(users)
     update_database(new_user)
+    login(users)
         
 def login_menu(users):
     print("1. Login\n2. Register")
@@ -88,7 +102,7 @@ def login_menu(users):
 
 def logged_in_menu(user):
     print("Logged in")
-    print("1. Display Accounts\n2.Add new account")
+    print("1.Display Accounts\n2.Add new account")
 
     x = int(input())
 
@@ -100,9 +114,32 @@ def logged_in_menu(user):
 
 def display_saved_accounts(user):
     print(user.print_savedAccounts())
+    return
         
+def write_account_json(new_account, username):
+    with open('users.json') as json_file: 
+        data = json.load(json_file) 
+        for i in data['users']:
+            if i['username'] == username:
+                temp = i['saved_accounts']
+                temp.append(new_account)
+                write_json(data)
 
-#def add_new_saved_account(user):
+def add_new_saved_account(user):
+    print("Profile: ")
+    profile = input()
+    print("Username: ")
+    username = input()
+    print("Password: ")
+    password = input()
+
+    new_account = {
+        "name": profile,
+        "username": username,
+        "password": password
+    }
+    write_account_json(new_account, user.getName())
+    return
 
 
 load_database(users)
