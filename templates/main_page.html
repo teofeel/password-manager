@@ -3,9 +3,30 @@
         <link href = "main_page.css">
     </head>
     <body>
-        <h1>Wlcome {{content}}</h1>
+        <h1>{{content}}</h1>
         <a href="/">Logout</a>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Account</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for acc in accounts %}
+                <tr>
+                    <td>{{acc.getName()}}</td>
+                    <td>{{acc.getUsername()}}</td>
+                    <td>{{acc.getPass()}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
         <br>
-        <a href="/add_account">Add new account</a>
+
+        <a href='/new_account'>Add new account</a>
+
     </body>
 </html>

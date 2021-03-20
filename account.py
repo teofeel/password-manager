@@ -15,7 +15,7 @@ class Account:
         self.__name = name
     
     def getName(self):
-        return self.__name
+        return self.__account_name
 
     def setPass(self, password):
         self.__password = password

@@ -11,18 +11,18 @@ from user import User
 #connect users.json with mongoDB
 
 users = []
-
+current_user = User("","",[])
 def load_database(users):
     users_file = open("users.json")
     users_data = json.load(users_file)
-    accounts = []
-    #from saved_accounts we retrieve data(name of website,username/email, password) and import it in users
+
     for u in users_data["users"]:
+        accounts = [] 
         for acc in u["saved_accounts"]:
             accounts.append(Account(acc["name"],acc["username"], acc["password"]))
 
         users.append(User(u["username"], u["password"], accounts)) 
-        account = [] 
+        
 
 def write_json(data, filename='users.json'):
     with open(filename,'w') as f: 
@@ -45,7 +45,8 @@ def login(users):
 
     for i in users:
         if i.getName() == username and i.getPassword() == password:
-            logged_in_menu(i)
+            current_user = i
+            logged_in_menu(current_user)
         else:
             continue
 
@@ -102,6 +103,7 @@ def login_menu(users):
 def logged_in_menu(user):
     print("Logged in")
     print("1.Display Accounts\n2.Add new account")
+    print(type(current_user))
 
     x = int(input())
 
@@ -113,6 +115,8 @@ def logged_in_menu(user):
 
 def display_saved_accounts(user):
     print(user.print_savedAccounts())
+    for i in user.getAccounts():
+        print(i.getName())
     return
         
 def write_account_json(new_account, username):
