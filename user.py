@@ -29,6 +29,9 @@ class User:
 
     def getAccounts(self):
         return self.__saved_accounts
+    
+    def add_account(self,account):
+        self.__saved_accounts.append(account)
 
     def print_savedAccounts(self):
         stringneki =  self.__name + "\n"

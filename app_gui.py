@@ -5,7 +5,6 @@ from random import randint
 from account import Account
 from user import User
 
-#need to finish adding new user
 #connect users.json with mongoDB
 
 app = Flask(__name__)
@@ -124,7 +123,7 @@ def write_account_json(new_account, username):
                 temp = i['saved_accounts']
                 temp.append(new_account)
                 write_json(data)
-        json_file.close()
+        
     
 
 @app.route("/new_account/")
@@ -139,6 +138,12 @@ def add_new_account():
         username = request.form.get("username")
         password = request.form.get("password")
         conf_pass = request.form.get("confirm_password")
+
+        if password!=conf_pass:
+            return render_template("new_account_page.html", content="Passwords don't match")
+            
+        acc = Account(account,username,password)
+        current_user.add_account(acc)
 
         new_acc = {
             "name": account,
