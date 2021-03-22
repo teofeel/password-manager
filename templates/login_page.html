@@ -2,15 +2,13 @@
 <html>
     <head>
         <title>Password manager</title>
-        <link href = "login_page.css">
+        <link rel="stylesheet" href = "login_page.css">
     </head>
 
     <body>
         <h1>Login</h1>
-        <div id="login_form">
-            <h2>Login</h2>
-
-            <form action = "{{url_for("login_user")}}" method="POST">
+        <div class="login_form">
+            <form class="forma" action = "{{url_for("login_user")}}" method="POST">
                 <h4>Username</h4>
                 <input type = "text" name="username">
                 <h4>Password</h4>
@@ -21,7 +19,7 @@
             </form>
         </div>
         <br>
-        <div id="register_new_user">
+        <div class="register_new_user">
             <a href="/register">Register new user</a>
         </div>
     </body>
